@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de cadastro</title>
+</head>
+<body>
+    Nome: <input id="in_nome" ><br>
+    Data da gravação: <input id="in_data" ><br>
+    Nota: <input id="in_nota" ><br>
+    Infantil: <input id="in_infantil"><br>
+    URL Foto: <input id="in_foto" onkeyup="img_foto.src=this.value"><br>
+    <button onclick="cadastrar()">Cadastrar</button>
+    <br>
+    <img id="img_foto" style="height: 300px">
+
+</body>
+</html>
+<script>
+    function cadastrar() {
+        const dados = JSON.stringify({
+          "nome": in_nome.value,
+          "dataGravacao": in_data.value,
+          "notaSpotify": in_nota.value,
+          "infantil": in_infantil.value,
+          "urlFoto": in_foto.value
+        });
+
+        const config = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'Accept-Language': 'pt-BR'},
+          body: dados
+        };
+
+        fetch("/musicas", config)
+        .then(resposta => {
+            if (resposta.ok) {
+                alert('Cadastro OK')
+            } else {
+                alert('Deu RUIM!')
+            }
+        })
+    }
+</script>

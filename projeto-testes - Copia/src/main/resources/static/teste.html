@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste</title>
+</head>
+<body>
+    Foto da música de ID:
+    <input id="in_codigo" onkeyup="atualizar()">
+
+    <br>
+    <img id="img_foto" style="height: 300px">
+
+</body>
+</html>
+<script>
+    function atualizar() {
+        if (isNaN(in_codigo.value)) {
+            return
+        }
+
+        fetch("/musicas/search/foto?codigo="+in_codigo.value)
+        .then(resposta => {
+            if (resposta.ok) {
+                return resposta.text()
+            } else {
+                return "https://interprete.me/wp-content/uploads/2015/05/foto-nao-encontrada.jpg"
+            }
+        })
+        .then(urlFoto => img_foto.src = urlFoto.replaceAll('"',''))
+    }
+</script>
